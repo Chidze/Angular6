@@ -1,0 +1,132 @@
+<div class="cont">
+  <div class="header">
+    <span>Angular Blog</span>
+    <div class="buttons">
+      <div class="admin-buttons" *ngIf="user||admin">
+        <button class="add-post" data-bs-toggle="modal" data-bs-target="#modalAdd">Add post</button>
+        <div class="admin" *ngIf="admin">admin</div>
+        <div class="admin" *ngIf="user">{{ login }}</div>
+        <button class="sign-out" (click)="signOut()">Sign Out</button>
+      </div>
+      <div class="start-buttons" *ngIf="!user&&!admin">
+        <button class="sign-in" data-bs-toggle="modal" data-bs-target="#modalIn" >Sign in</button>
+        <button class="sign-up" data-bs-toggle="modal" data-bs-target="#modalUp">Sign up</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="posts">
+    <div class="post" *ngFor="let item of blogs">
+      <div class="info">
+        <h2 class="topic">{{item.topic}}</h2>
+        <div class="postedBy">Posted by: <div class="postedBy-m"> {{item.postedBy}}</div>
+        </div>
+        <p class="message">{{item.message}}</p>
+      </div>
+      <div class="actions">
+        <div class="time">
+          <div class="clock"></div>
+          <div class="time-date">{{ item.date | date:' HH:mm, dd.MM.YYYY ' }}</div>
+        </div>
+        <div class="actions-buttons">
+          <div *ngIf="login === item.postedBy||admin">
+            <button class="actions-edit" (click)="adminEdit(item)" data-bs-toggle="modal"
+              data-bs-target="#modalEdit">Edit</button>
+            <button class="actions-delete" (click)="adminDelete(item)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="modalEdit" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span>Title:</span>
+          <input type="text" [(ngModel)]="post.title">
+          <span>Text:</span>
+          <textarea [(ngModel)]="post.text"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" (click)="updateBlog()" data-bs-dismiss="modal">Edit
+            Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="modalIn" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sign In</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span>Email:</span>
+          <input type="email" [(ngModel)]="emailIn">
+          <span>Password:</span>
+          <input type="password" [(ngModel)]="passwordIn">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" (click)="signIn()" data-bs-dismiss="modal">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modalUp" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sign Up</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span>UserName</span>
+          <input type="text" [(ngModel)]="login">
+          <span>Email:</span>
+          <input type="email" [(ngModel)]="emailUp">
+          <span>Password:</span>
+          <input type="password" [(ngModel)]="passwordUp">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" (click)="signUp()" data-bs-dismiss="modal">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modalAdd" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span>Title:</span>
+          <input type="text" [(ngModel)]="addTitle">
+          <span>Text:</span>
+          <textarea [(ngModel)]="addText"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" (click)="addBlog()" data-bs-dismiss="modal">Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
